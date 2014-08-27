@@ -1,0 +1,35 @@
+---
+- hosts: all 
+  tasks:
+        - name: Install Tomcat7
+          apt: name=tomcat7 update_cache=yes install_recommends=no
+
+        - name: Set environment variables
+          copy: src=fedora-env.sh dest=/etc/profile.d/fedora-env.sh
+
+        - name: Load environment variables
+          command: sh /etc/profile.d/fedora-env.sh
+
+        - name: Download Fedora 3.8.0-RC1 Installer
+          get_url: >
+              url=https://github.com/fcrepo3/fcrepo/releases/download/v3.8.0-RC1/fcrepo-installer-3.8.0-SNAPSHOT.jar
+              dest=/tmp/fcrepo-installer.jar
+              force=no
+
+        - name: Install Fedora 3.8.0-RC1
+          command: >
+              java -jar /tmp/fcrepo-installer.jar
+              /vagrant/provisioning/install.properties
+              creates=/opt/fedora/install/fedora.war
+
+        - name: Copy Fedora web application context file
+          copy: src=fedora.xml dest=/opt/fedora/install/fedora.xml
+
+        - name: Grant group permissions for tomcat7
+          command: sh -c 'chgrp -R tomcat7 /opt/fedora && chmod -R g+rwx /opt/fedora'
+
+        - name: Set up Fedora web application context
+          command: >
+              ln -sf /etc/tomcat7/Catalina/localhost/fedora.xml /opt/fedora/install/fedora.xml
+              creates=/etc/tomcat7/Catalina/localhost/fedora.xml
+
