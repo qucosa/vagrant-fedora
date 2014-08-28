@@ -13,19 +13,19 @@
         - name: Download Fedora 3.8.0-RC1 Installer
           get_url: >
               url=https://github.com/fcrepo3/fcrepo/releases/download/v3.8.0-RC1/fcrepo-installer-3.8.0-SNAPSHOT.jar
-              dest=/tmp/fcrepo-installer.jar
+              dest=/home/vagrant/fcrepo-installer.jar
               force=no
 
         - name: Install Fedora 3.8.0-RC1
           command: >
-              java -jar /tmp/fcrepo-installer.jar
+              java -jar /home/vagrant/fcrepo-installer.jar
               /vagrant/provisioning/install.properties
               creates=/opt/fedora/install/fedora.war
 
         - name: Copy Fedora web application context file
           copy: src=fedora.xml dest=/opt/fedora/install/fedora.xml
 
-        - name: Grant group permissions for tomcat7
+        - name: Grant group permissions for Fedora home to tomcat7
           command: sh -c 'chgrp -R tomcat7 /opt/fedora && chmod -R g+rwx /opt/fedora'
 
         - name: Set up Fedora web application context
@@ -33,3 +33,33 @@
               ln -sf /etc/tomcat7/Catalina/localhost/fedora.xml /opt/fedora/install/fedora.xml
               creates=/etc/tomcat7/Catalina/localhost/fedora.xml
 
+
+        - name: Create SWORD Service directory
+          file: state=directory path=/opt/sword
+
+        - file: state=directory path=/opt/sword/bin
+        - file: state=directory path=/opt/sword/log
+        - file: state=directory path=/opt/sword/config
+
+        - name: Download SWORD 1.3.2-SLUB
+          get_url: >
+              url=https://github.com/slub/sword-fedora/releases/download/v1.3.2/sword-fedora-1.3.2-slub.war
+              dest=/opt/sword/bin/sword.war
+              force=no
+
+        - name: Grant group permissions for SWORD home to tomcat7 
+          command: sh -c 'chgrp -R tomcat7 /opt/sword && chmod -R g+rwx /opt/sword'
+
+        - name: Copy SWORD web application context file
+          copy: src=sword.xml dest=/opt/sword/bin/sword.xml
+
+        - name: Copy SWORD properties file
+          copy: src=properties.xml dest=/opt/sword/config/properties.xml
+
+        - name: Copy SWORD log4j configuration file
+          copy: src=log4j.xml dest=/opt/sword/config/log4j.xml
+
+        - name: Set up SWORD web application context
+          command: >
+              ln -sf /etc/tomcat7/Catalina/localhost/sword.xml /opt/sword/bin/sword.xml
+              creates=/etc/tomcat7/Catalina/localhost/sword.xml
