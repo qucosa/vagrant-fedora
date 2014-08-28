@@ -29,10 +29,11 @@
           command: sh -c 'chgrp -R tomcat7 /opt/fedora && chmod -R g+rwx /opt/fedora'
 
         - name: Set up Fedora web application context
-          command: >
-              ln -sf /etc/tomcat7/Catalina/localhost/fedora.xml /opt/fedora/install/fedora.xml
-              creates=/etc/tomcat7/Catalina/localhost/fedora.xml
-
+          file: >
+              src=/opt/fedora/install/fedora.xml
+              dest=/etc/tomcat7/Catalina/localhost/fedora.xml
+              state=link
+              force=yes
 
         - name: Create SWORD Service directory
           file: state=directory path=/opt/sword
@@ -60,6 +61,8 @@
           copy: src=log4j.xml dest=/opt/sword/config/log4j.xml
 
         - name: Set up SWORD web application context
-          command: >
-              ln -sf /etc/tomcat7/Catalina/localhost/sword.xml /opt/sword/bin/sword.xml
-              creates=/etc/tomcat7/Catalina/localhost/sword.xml
+          file: >
+              src=/opt/sword/bin/sword.xml
+              dest=/etc/tomcat7/Catalina/localhost/sword.xml
+              state=link
+
