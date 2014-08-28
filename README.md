@@ -24,6 +24,26 @@ software in order to provide the Fedora Service.
 
 # Known Issues
 
+## VirtualBox Guest Additions not installed or outdated
+
+If you get the following message when you do ```vagrant up``` means that the Virtual Guest Additions are not installed or outdated:
+
+```
+==> default: Checking for guest additions in VM...
+    default: No guest additions were detected on the base box for this VM! Guest
+    default: additions are required for forwarded ports, shared folders, host only
+    default: networking, and more. If SSH fails on this machine, please install
+    default: the guest additions and repackage the box to continue.
+    default: 
+    default: This is not an error message; everything may continue to work properly,
+```
+Fortunately there is the Vagrant plugin ```vagrant-vbguest``` that helps you with the installation of the VirtualBox Guest Additions. To install go to the directory that contains the ```Vagrantfile``` and type the following command:
+
+Vagrant < 1.1.5: ```$ vagrant gem install vagrant-vbguest```
+Vagrant >= 1.1.5: ```$ vagrant plugin install vagrant-vbguest```
+
+Further information: http://kvz.io/blog/2013/01/16/vagrant-tip-keep-virtualbox-guest-additions-in-sync/
+
 ## VirtualBox DHCP server won't start
 If `vagrant up` failes with some error regarding host only adapter, check here for
 a workaround: https://github.com/berngp/docker-zabbix/issues/8
