@@ -1,8 +1,18 @@
 ---
+
 - hosts: all 
   tasks:
+        - name: Remove Open JDK 6
+          apt: name=openjdk-6-* state=absent purge=yes update_cache=yes
+
+        - name: Install Open JDK 7
+          apt: name={{ item }} install_recommends=no
+          with_items:
+              - openjdk-7-jre-headless
+              - openjdk-7-jre-lib
+
         - name: Install Tomcat7
-          apt: name=tomcat7 update_cache=yes install_recommends=no
+          apt: name=tomcat7 install_recommends=no
 
         - name: Set environment variables
           copy: src=fedora-env.sh dest=/etc/profile.d/fedora-env.sh
