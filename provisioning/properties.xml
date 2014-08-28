@@ -52,7 +52,7 @@
 					This is the URL which listens for deposit requests
 					##COLLECTION_PID## is overwritten at runtime to contain the value of collection_pid
 				-->
-				<deposit_url>http://glen.dnsalias.org/sword/##COLLECTION_PID##</deposit_url>
+				<deposit_url>http://fedora.vagrant.dev/sword/##COLLECTION_PID##</deposit_url>
 				<users/>
 				<title>Open Collection</title>
 				<abstract>This is a collection of objects which can be freely deposited to. This is aviable for the SWORD test project</abstract>
