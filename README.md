@@ -14,7 +14,7 @@ software in order to provide the Fedora Service.
 - Ansible
 - Quick Internet connection (because it's going to download a lot of stuff)
 
-# Usage
+## Usage
 
 1. Clone the Git repository
 2. Run `vagrant up` to install, run and provision the Virtual Machine
