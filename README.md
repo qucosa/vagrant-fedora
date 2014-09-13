@@ -48,6 +48,30 @@ Further information: http://kvz.io/blog/2013/01/16/vagrant-tip-keep-virtualbox-g
 If `vagrant up` failes with some error regarding host only adapter, check here for
 a workaround: https://github.com/berngp/docker-zabbix/issues/8
 
+## Vagrant cannot mount folder
+
+If you run Vagrant on VirtualBox 4.3.10 you might get the following message when you do ```vagrant up```:
+
+```
+Failed to mount folders in Linux guest. This is usually beacuse
+the "vboxsf" file system is not available. Please verify that
+the guest additions are properly installed in the guest and
+can work properly. The command attempted was:
+
+mount -t vboxsf -o uid=`id -u vagrant`,gid=`getent group vagrant | cut -d: -f3` /vagrant /vagrant
+mount -t vboxsf -o uid=`id -u vagrant`,gid=`id -g vagrant` /vagrant /vagrant
+```
+
+This is due to a [VirtualBox bug](https://www.virtualbox.org/ticket/12879) which is fixed for the 4.3.12 release. To make it work for VirtualBox 4.3.10, you will need to apply a workaround manually after ```vagrant ssh```:
+
+```
+sudo ln -s /opt/VBoxGuestAdditions-4.3.10/lib/VBoxGuestAdditions /usr/lib/VBoxGuestAdditions
+```
+
+After that run ```vagrant reload --provision``` to continue with the provisioning.
+
+**Note:** You will have to do this every time you rebuild the VM after calling ```vagrant destroy```.
+
 ## SWORD Server 500 Response
 The currently uses SWORD Server build has a critical bug in the response generation
 code: https://github.com/slub/sword-fedora/issues/2
