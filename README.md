@@ -72,10 +72,3 @@ After that run ```vagrant reload --provision``` to continue with the provisionin
 
 **Note:** You will have to do this every time you rebuild the VM after calling ```vagrant destroy```.
 
-## SWORD Server 500 Response
-The currently uses SWORD Server build has a critical bug in the response generation
-code: https://github.com/slub/sword-fedora/issues/2
-
-The deposit itself might be actually successful. I cannot fix this by next week, but
-there should be a fix in September.
-
