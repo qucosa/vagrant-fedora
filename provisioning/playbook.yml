@@ -27,7 +27,7 @@
           copy: src=fedora.xml dest=/opt/fedora/install/fedora.xml
 
         - name: Grant group permissions for Fedora home to tomcat7
-          command: sh -c 'chgrp -R tomcat7 /opt/fedora && chmod -R g+rwx /opt/fedora'
+          shell: chgrp -R tomcat7 /opt/fedora && chmod -R g+rwx /opt/fedora
 
         - name: Set up Fedora web application context
           file: >
