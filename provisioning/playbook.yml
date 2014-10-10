@@ -36,34 +36,4 @@
               state=link
               force=yes
 
-        - name: Create SWORD Service directory
-          file: state=directory path=/opt/sword
-
-        - file: state=directory path=/opt/sword/bin
-        - file: state=directory path=/opt/sword/log
-        - file: state=directory path=/opt/sword/config
-
-        - name: Download SWORD 1.3.3-SLUB
-          get_url: >
-              url=https://github.com/slub/sword-fedora/releases/download/v1.3.3/sword-fedora-1.3.3-slub.war
-              dest=/opt/sword/bin/sword.war
-              force=no
-
-        - name: Grant group permissions for SWORD home to tomcat7 
-          command: sh -c 'chgrp -R tomcat7 /opt/sword && chmod -R g+rwx /opt/sword'
-
-        - name: Copy SWORD web application context file
-          copy: src=sword.xml dest=/opt/sword/bin/sword.xml
-
-        - name: Copy SWORD properties file
-          copy: src=properties.xml dest=/opt/sword/config/properties.xml
-
-        - name: Copy SWORD log4j configuration file
-          copy: src=log4j.xml dest=/opt/sword/config/log4j.xml
-
-        - name: Set up SWORD web application context
-          file: >
-              src=/opt/sword/bin/sword.xml
-              dest=/etc/tomcat7/Catalina/localhost/sword.xml
-              state=link
 
