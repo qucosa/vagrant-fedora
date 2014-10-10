@@ -36,4 +36,9 @@
               state=link
               force=yes
 
+        - name: Wait for Fedora to boot up
+          shell: curl -s --retry 10 http://localhost:8080/fedora/describe > /dev/null
+
+        - name: Ingest Fedora Demo Content
+          shell: FEDORA_HOME=/opt/fedora /opt/fedora/client/bin/fedora-ingest-demos.sh localhost 8080 fedoraAdmin fedoraAdmin http
 
