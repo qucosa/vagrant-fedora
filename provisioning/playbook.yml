@@ -36,9 +36,14 @@
               state=link
               force=yes
 
-        - name: Wait for Fedora to boot up
-          shell: curl -s --retry 10 http://localhost:8080/fedora/describe > /dev/null
+        - name: Ensure Tomcat is started and enabled
+          service: name=tomcat7 state=started enabled=yes
+
+        - name: Wait for Fedora to boot up SOAP API
+          shell: /vagrant/provisioning/fedora-apim-isalive.sh
 
         - name: Ingest Fedora Demo Content
-          shell: FEDORA_HOME=/opt/fedora /opt/fedora/client/bin/fedora-ingest-demos.sh localhost 8080 fedoraAdmin fedoraAdmin http
+          shell: >
+              FEDORA_HOME=/opt/fedora
+              /opt/fedora/client/bin/fedora-ingest-demos.sh localhost 8080 fedoraAdmin fedoraAdmin http
 
