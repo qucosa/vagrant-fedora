@@ -1,7 +1,8 @@
 # Vagrant File for Fedora Commons Setup
 
 Uses [Vagrant](https://www.vagrantup.com/) to spin up a developer friendly
-VirtualBox VM containing a base Fedora Commons repository instance.
+VirtualBox VM containing a base Fedora Commons repository instance with all
+default services deployed and all demo objects ingested.
 
 It uses [Ansible](http://www.ansible.com/home) to provision the required
 software in order to provide the Fedora Service.
