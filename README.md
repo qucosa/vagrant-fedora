@@ -9,10 +9,8 @@ software in order to provide the Fedora Service.
 
 ## Requirements
 
-- Git
 - VirtualBox
 - Vagrant
-- Ansible
 - Quick Internet connection (because it's going to download a lot of stuff)
 
 ## Usage
