@@ -11,13 +11,13 @@
         - name: Load environment variables
           command: sh /etc/profile.d/fedora-env.sh
 
-        - name: Download Fedora 3.8.0-RC1 Installer
+        - name: Download Fedora 3.8.0 Installer
           get_url: >
-              url=https://github.com/fcrepo3/fcrepo/releases/download/v3.8.0-RC1/fcrepo-installer-3.8.0-SNAPSHOT.jar
+              url=http://downloads.sourceforge.net/project/fedora-commons/fedora/3.8.0/fcrepo-installer-3.8.0.jar
               dest=/home/vagrant/fcrepo-installer.jar
               force=no
 
-        - name: Install Fedora 3.8.0-RC1
+        - name: Install Fedora 3.8.0
           command: >
               java -jar /home/vagrant/fcrepo-installer.jar
               /vagrant/provisioning/install.properties
